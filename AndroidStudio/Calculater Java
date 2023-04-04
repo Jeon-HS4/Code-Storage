@@ -1,0 +1,67 @@
+package com.example.app0322;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity6 extends AppCompatActivity {
+
+    EditText et1, et2;
+    Button btn1, btn2, btn3, btn4;
+    TextView tv;
+    String num1, num2;
+    Integer result;
+    Button[] numBtn = new Button[10];
+    Integer[] numBtnId = {R.id.button11, R.id.button12, R.id.button13,
+            R.id.button14, R.id.button15, R.id.button16, R.id.button17,
+            R.id.button18, R.id.button19, R.id.button20};
+    int i;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main6);
+        et1 = (EditText) findViewById(R.id.editText2);
+        et2 = (EditText) findViewById(R.id.editText3);
+        btn1 = (Button) findViewById(R.id.button21);
+        btn2 = (Button) findViewById(R.id.button22);
+        btn3 = (Button) findViewById(R.id.button23);
+        btn4 = (Button) findViewById(R.id.button24);
+        tv = (TextView) findViewById(R.id.textView2);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                num1 = et1.getText().toString();
+                num2 = et2.getText().toString();
+                result = Integer.parseInt(num1) + Integer.parseInt(num2);
+                tv.setText("계산결과: "+result);
+            }
+        });
+        for(i=0; i<numBtnId.length; i++){
+            numBtn[i] = (Button) findViewById(numBtnId[i]);     //숫자버튼 위젯 가져오기
+        }
+        for(i=0; i<numBtnId.length; i++) {
+            final int index;
+            index = i;
+            numBtn[index].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(et1.isFocused()){
+                        num1 = et1.getText().toString() + numBtn[index].getText().toString();
+                        et1.setText(num1);
+                    }else if(et2.isFocused()){
+                        num2 = et2.getText().toString() + numBtn[index].getText().toString();
+                        et2.setText(num2);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "입력할 곳을 선택하세요", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+}
